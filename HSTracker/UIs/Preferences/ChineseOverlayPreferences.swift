@@ -67,7 +67,8 @@ struct ChineseOverlayPreferencesView: View {
                 }
                 chineseSlider("文字和卡牌大小", value: $fontScale,
                               range: ChineseOverlayLayoutViewModel.minimumFontScale...ChineseOverlayLayoutViewModel.maximumFontScale,
-                              suffix: "%") {
+                              suffix: "%",
+                              step: 0.05) {
                     Settings.chineseOverlayFontScale = $0
                 }
                 Text("解锁覆盖层后，也可以直接拖动左右面板的内侧边缘调整宽度；锁定后继续点击穿透。")
@@ -136,6 +137,7 @@ struct ChineseOverlayPreferencesView: View {
                                value: Binding<Double>,
                                range: ClosedRange<Double>,
                                suffix: String = " px",
+                               step: Double = 1,
                                onChange: @escaping (Double) -> Void) -> some View {
         HStack(spacing: 10) {
             Text(title)
@@ -144,7 +146,7 @@ struct ChineseOverlayPreferencesView: View {
                                   set: {
                                       value.wrappedValue = $0
                                       onChange($0)
-                                  }), in: range, step: 1)
+                                  }), in: range, step: step)
             Text(displayValue(value.wrappedValue, suffix: suffix))
                 .font(.system(.caption, design: .monospaced))
                 .frame(width: 58, alignment: .trailing)
