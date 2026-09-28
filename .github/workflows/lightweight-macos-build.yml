@@ -54,6 +54,10 @@ jobs:
           set -e
           app="$(find build/DerivedData/Build/Products/Release -maxdepth 1 -name 'HSTracker.app' -print -quit)"
           test -n "$app"
+          codesign --deep --force --sign - \
+            --entitlements HSTracker/HSTracker.entitlements \
+            "$app"
+          codesign --verify --deep --strict "$app"
           mkdir -p build/packages
           ditto -c -k --sequesterRsrc --keepParent "$app" "build/packages/HSTracker-lightweight-tracker-${GITHUB_SHA::7}.zip"
           hdiutil create \
