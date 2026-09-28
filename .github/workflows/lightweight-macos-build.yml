@@ -1,0 +1,79 @@
+name: Lightweight macOS build
+
+on:
+  push:
+    branches:
+      - dev/lightweight-tracker
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref to build
+        required: false
+        default: dev/lightweight-tracker
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Install build utility
+        run: |
+          if ! command -v wget >/dev/null 2>&1; then
+            brew install wget
+          fi
+
+      - name: Build app
+        env:
+          CI: "1"
+        run: |
+          set -o pipefail
+          rm -rf build
+          xcodebuild \
+            -project HSTracker.xcodeproj \
+            -scheme HSTracker \
+            -configuration Release \
+            -derivedDataPath build/DerivedData \
+            -clonedSourcePackagesDirPath build/SourcePackages \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            build 2>&1 | tee build/xcodebuild.log
+
+      - name: Package app
+        run: |
+          set -e
+          app="$(find build/DerivedData/Build/Products/Release -maxdepth 1 -name 'HSTracker.app' -print -quit)"
+          test -n "$app"
+          mkdir -p build/packages
+          ditto -c -k --sequesterRsrc --keepParent "$app" "build/packages/HSTracker-lightweight-tracker-${GITHUB_SHA::7}.zip"
+          hdiutil create \
+            -volname "HSTracker Lightweight Tracker" \
+            -srcfolder "$app" \
+            -ov \
+            -format UDZO \
+            "build/packages/HSTracker-lightweight-tracker-${GITHUB_SHA::7}.dmg"
+
+      - name: Upload installer packages
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HSTracker-lightweight-tracker-${{ github.sha }}
+          path: build/packages/*
+          if-no-files-found: error
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: HSTracker-lightweight-build-log-${{ github.run_id }}
+          path: build/xcodebuild.log
+          if-no-files-found: ignore
