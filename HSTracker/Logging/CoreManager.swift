@@ -60,7 +60,8 @@ final class CoreManager: NSObject {
             NotificationManager.showNotification(type: .restartRequired)
         }
         
-        let logPath = MirrorHelper.getLogSessionDir()
+        let logPath = LogPathResolver.resolve(mirrorPath: MirrorHelper.getLogSessionDir(),
+                                              configuredGamePath: Settings.hearthstonePath)
         logReaderManager = LogReaderManager(logPath: logPath, coreManager: self)
         
         game.windowManager.rootOverlay?.viewModel.playerCounters.setCounters(game.counterManager)
@@ -285,7 +286,8 @@ final class CoreManager: NSObject {
             }
 #endif
 
-            let logPath = MirrorHelper.getLogSessionDir()
+            let logPath = LogPathResolver.resolve(mirrorPath: MirrorHelper.getLogSessionDir(),
+                                                  configuredGamePath: Settings.hearthstonePath)
             if !logPath.isEmpty {
                 logger.info("Starting log reader with path \(logPath)")
                 // Never leave the previous manager running: two of them would

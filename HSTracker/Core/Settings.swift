@@ -832,6 +832,10 @@ final class Settings {
 
     @UserDefault(key: Settings.theme_token, defaultValue: "dark")
     static var theme: String
+    @UserDefault(key: Settings.lightweight_chinese_overlay, defaultValue: false)
+    static var lightweightChineseOverlay: Bool
+    @UserDefault(key: Settings.priest_assistant_enabled, defaultValue: true)
+    static var priestAssistantEnabled: Bool
 
     // MARK: - Paths / utils
     static var isCyrillicLanguage: Bool {
@@ -880,6 +884,8 @@ extension Settings {
     static let migrated_legacy_bundle_id = "migrated_legacy_bundle_id"
     
     static let theme_token = "theme"
+    static let lightweight_chinese_overlay = "lightweight_chinese_overlay"
+    static let priest_assistant_enabled = "priest_assistant_enabled"
 
     static let can_join_fullscreen = "can_join_fullscreen"
     static let quit_when_hs_closes = "quit_when_hs_closes"

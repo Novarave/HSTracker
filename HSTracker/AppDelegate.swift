@@ -53,6 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SPUStandardUserDriverDelegat
             ]),
             PreferencePaneGroup(title: String.localizedString("Options_Overlay_Header", comment: ""), panes: [
                 TrackersPreferences(nibName: "TrackersPreferences", bundle: nil),
+                ChineseOverlayPreferences(),
                 // Built in code, so they have no nib to name - see OverlayLayoutPreferences,
                 // RelatedCardsPreferences and CountersPreferences.
                 OverlayLayoutPreferences(),

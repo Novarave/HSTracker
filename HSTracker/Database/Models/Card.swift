@@ -49,11 +49,18 @@ final class Card {
     var costUnholy = 0
     var name = "unknown"
     var enName = ""
+    /// Official Simplified Chinese strings retained alongside the selected
+    /// display language. The normal card model continues to use `name` and
+    /// `text`; the lightweight Chinese overlay opts into these fields without
+    /// changing the rest of the app's localization behavior.
+    var zhCNName = ""
     var playerClass: CardClass = .neutral
     var rarity: Rarity = .free
     var set: CardSet?
     var text = ""
     var enText = ""
+    var zhCNText = ""
+    var zhCNFlavor = ""
     var race: Race = .invalid
     var races: [Race] = []
     // The per-race marker tags the entity carries (GameTag 2522-2588), in the
@@ -287,6 +294,14 @@ final class Card {
         }
         return self.enName
     }
+
+    var simplifiedChineseName: String {
+        zhCNName.isEmpty ? name : zhCNName
+    }
+
+    var simplifiedChineseText: String {
+        zhCNText.isEmpty ? text : zhCNText
+    }
     
     func isClass(cardClass: CardClass) -> Bool {
         if playerClass == cardClass {
@@ -462,10 +477,14 @@ extension Card: NSCopying {
         copy.costUnholy = self.costUnholy
         copy.name = self.name
         copy.enName = self.enName
+        copy.zhCNName = self.zhCNName
         copy.playerClass = self.playerClass
         copy.rarity = self.rarity
         copy.set = self.set
         copy.text = self.text
+        copy.enText = self.enText
+        copy.zhCNText = self.zhCNText
+        copy.zhCNFlavor = self.zhCNFlavor
         copy.race = self.race
         copy.type = self.type
         copy.mechanics = self.mechanics

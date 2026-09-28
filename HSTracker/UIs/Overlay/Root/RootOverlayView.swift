@@ -568,32 +568,36 @@ struct RootOverlayView: View {
             //
             // Player first, then opponent, then the link panel and the
             // secrets container, matching their order on HDT's own canvas.
-            TrackerPanelView(viewModel: viewModel.playerTracker,
-                             canvasSize: geometry.size,
-                             isLocked: viewModel.windowsLocked,
-                             hoverHandler: viewModel.playerTrackerHover)
-            TrackerPanelView(viewModel: viewModel.opponentTracker,
-                             canvasSize: geometry.size,
-                             isLocked: viewModel.windowsLocked,
-                             hoverHandler: viewModel.opponentTrackerHover)
-            // The graveyard counters' detail lists, drawn after both panels
-            // so they are not covered by the other side's stack.
-            TrackerGraveyardDetailsView(
-                viewModel: viewModel.playerTracker,
-                canvasSize: geometry.size,
-                counterRect: viewModel.hoverRegions.first { $0.id == viewModel.playerTracker.graveyardHoverRegionID }?.rect,
-                isHovered: viewModel.hoveredRegionIds.contains(viewModel.playerTracker.graveyardHoverRegionID))
-            TrackerGraveyardDetailsView(
-                viewModel: viewModel.opponentTracker,
-                canvasSize: geometry.size,
-                counterRect: viewModel.hoverRegions.first { $0.id == viewModel.opponentTracker.graveyardHoverRegionID }?.rect,
-                isHovered: viewModel.hoveredRegionIds.contains(viewModel.opponentTracker.graveyardHoverRegionID))
-            LinkOpponentDeckPanelView(viewModel: viewModel.linkOpponentDeck,
-                                      opponent: viewModel.opponentTracker,
-                                      canvasSize: geometry.size)
-            SecretsPanelView(viewModel: viewModel.secretsPanel,
-                             canvasSize: geometry.size,
-                             isLocked: viewModel.windowsLocked)
+            if !viewModel.lightweightChineseOverlayEnabled {
+                TrackerPanelView(viewModel: viewModel.playerTracker,
+                                 canvasSize: geometry.size,
+                                 isLocked: viewModel.windowsLocked,
+                                 hoverHandler: viewModel.playerTrackerHover)
+                TrackerPanelView(viewModel: viewModel.opponentTracker,
+                                 canvasSize: geometry.size,
+                                 isLocked: viewModel.windowsLocked,
+                                 hoverHandler: viewModel.opponentTrackerHover)
+                // The graveyard counters' detail lists, drawn after both panels
+                // so they are not covered by the other side's stack.
+                TrackerGraveyardDetailsView(
+                    viewModel: viewModel.playerTracker,
+                    canvasSize: geometry.size,
+                    counterRect: viewModel.hoverRegions.first { $0.id == viewModel.playerTracker.graveyardHoverRegionID }?.rect,
+                    isHovered: viewModel.hoveredRegionIds.contains(viewModel.playerTracker.graveyardHoverRegionID))
+                TrackerGraveyardDetailsView(
+                    viewModel: viewModel.opponentTracker,
+                    canvasSize: geometry.size,
+                    counterRect: viewModel.hoverRegions.first { $0.id == viewModel.opponentTracker.graveyardHoverRegionID }?.rect,
+                    isHovered: viewModel.hoveredRegionIds.contains(viewModel.opponentTracker.graveyardHoverRegionID))
+                LinkOpponentDeckPanelView(viewModel: viewModel.linkOpponentDeck,
+                                          opponent: viewModel.opponentTracker,
+                                          canvasSize: geometry.size)
+                SecretsPanelView(viewModel: viewModel.secretsPanel,
+                                 canvasSize: geometry.size,
+                                 isLocked: viewModel.windowsLocked)
+            } else {
+                ChineseLightweightOverlayView(viewModel: viewModel, canvasSize: geometry.size)
+            }
             // The two board grids. They draw nothing but the Mercenaries
             // ability strips - the hover ellipses behind them are measured
             // and never painted, as HDT's unfilled Ellipses are - and they

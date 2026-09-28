@@ -98,24 +98,28 @@ struct ImageUtils {
     }
     
     static func cardArt(for cardId: String, completion: @escaping ((NSImage?) -> Void)) {
-        let image = cacheCardArt[cardId]
-        
+        let language = cardArtLanguage
+        let cacheKey = "\(language):\(cardId)"
+        let image = cacheCardArt[cacheKey]
+
         if let image = image {
             completion(image)
             return
         }
-        loadImage(type: .cardArt, cardId: cardId, completion: completion)
+        loadImage(type: .cardArt, cardId: cardId, language: language, completion: completion)
     }
-    
+
     static func cardArtBG(for cardId: String, baconTriple: Bool, completion: @escaping ((NSImage?) -> Void)) {
         let finalCardId = "\(cardId)\(baconTriple ? "_triple" : "")"
-        let image = cacheCardArtBG[finalCardId]
-        
+        let language = cardArtLanguage
+        let cacheKey = "\(language):\(finalCardId)"
+        let image = cacheCardArtBG[cacheKey]
+
         if let image = image {
             completion(image)
             return
         }
-        loadImage(type: .cardArtBG, cardId: finalCardId, completion: completion)
+        loadImage(type: .cardArtBG, cardId: finalCardId, language: language, completion: completion)
     }
 
     static func cachedHero(cardId: String) -> NSImage? {
@@ -131,7 +135,7 @@ struct ImageUtils {
     }
 
     static func cachedCardArt(cardId: String) -> NSImage? {
-        return cacheCardArt[cardId]
+        return cacheCardArt["\(cardArtLanguage):\(cardId)"]
     }
 
     static func cachedArt(cardId: String) -> NSImage? {
@@ -140,7 +144,11 @@ struct ImageUtils {
         return res
     }
     
-    private static func loadImage(type: ImageType, cardId: String, completion: @escaping ((NSImage?) -> Void)) {
+    private static func loadImage(type: ImageType,
+                                  cardId: String,
+                                  language: String? = nil,
+                                  completion: @escaping ((NSImage?) -> Void)) {
+        let language = language ?? cardArtLanguage
         // Check if the image has been downloaded
         var path: URL
         switch type {
@@ -149,9 +157,9 @@ struct ImageUtils {
         case .art:
             path = Paths.arts.appendingPathComponent("\(cardId).jpg")
         case .cardArt:
-            path = Paths.cards.appendingPathComponent("\(cardId).jpg")
+            path = Paths.cards.appendingPathComponent("\(language)_\(cardId).jpg")
         case .cardArtBG:
-            path = Paths.cardsBG.appendingPathComponent("\(cardId).jpg")
+            path = Paths.cardsBG.appendingPathComponent("\(language)_\(cardId).jpg")
         case .hero:
             path = Paths.heroes.appendingPathComponent("\(cardId).png")
         }
@@ -162,9 +170,9 @@ struct ImageUtils {
             case .art:
                 cacheArt[cardId] = image
             case .cardArt:
-                cacheCardArt[cardId] = image
+                cacheCardArt["\(language):\(cardId)"] = image
             case .cardArtBG:
-                cacheCardArtBG[cardId] = image
+                cacheCardArtBG["\(language):\(cardId)"] = image
             case .hero:
                 cacheHero[cardId] = image
             }
@@ -181,9 +189,9 @@ struct ImageUtils {
         case .art:
             url = artUrl256(cardId: cardId)
         case .cardArt:
-            url = artUrl(cardId: cardId, lang: Settings.hearthstoneLanguage?.rawValue ?? "enUS")
+            url = artUrl(cardId: cardId, lang: language)
         case .cardArtBG:
-            url = artUrlBG(cardId: cardId, lang: Settings.hearthstoneLanguage?.rawValue ?? "enUS")
+            url = artUrlBG(cardId: cardId, lang: language)
         case .hero:
             url = heroUrl(cardId: cardId)
         }
@@ -208,9 +216,9 @@ struct ImageUtils {
                     case .art:
                         cacheArt[cardId] = image
                     case .cardArt:
-                        cacheCardArt[cardId] = image
+                        cacheCardArt["\(language):\(cardId)"] = image
                     case .cardArtBG:
-                        cacheCardArtBG[cardId] = image
+                        cacheCardArtBG["\(language):\(cardId)"] = image
                     case .hero:
                         cacheHero[cardId] = image
                     }
@@ -227,5 +235,15 @@ struct ImageUtils {
                 }
                 }.resume()
         }
+    }
+
+    /// The lightweight Chinese overlay always asks the official renderer for
+    /// Simplified Chinese art, while the established overlay keeps following
+    /// the user's selected Hearthstone language.
+    private static var cardArtLanguage: String {
+        if Settings.lightweightChineseOverlay {
+            return Language.Hearthstone.zhCN.rawValue
+        }
+        return Settings.hearthstoneLanguage?.rawValue ?? "enUS"
     }
 }

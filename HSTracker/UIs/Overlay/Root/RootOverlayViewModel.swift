@@ -115,6 +115,7 @@ class RootOverlayViewModel: ObservableObject {
     // trackers, which used to be windows of their own.
     let playerTracker = TrackerPanelViewModel(playerType: .player)
     let opponentTracker = TrackerPanelViewModel(playerType: .opponent)
+    let priestAssistant = PriestAssistantViewModel()
 
     // What a hovered row in either tracker raises: the blown-up card render, the
     // related-cards grid and the player deck's synergy highlight. One per side,
@@ -135,6 +136,10 @@ class RootOverlayViewModel: ObservableObject {
     // re-render when it is toggled.
     @Published var windowsLocked = Settings.windowsLocked
     private var windowsLockedObserver: NSObjectProtocol?
+    @Published var lightweightChineseOverlayEnabled = Settings.lightweightChineseOverlay
+    @Published var priestAssistantEnabled = Settings.priestAssistantEnabled
+    private var lightweightChineseOverlayObserver: NSObjectProtocol?
+    private var priestAssistantEnabledObserver: NSObjectProtocol?
 
     init() {
         // HDT wires the same reference in OverlayWindow's constructor
@@ -160,11 +165,28 @@ class RootOverlayViewModel: ObservableObject {
             object: nil, queue: .main) { [weak self] _ in
                 self?.windowsLocked = Settings.windowsLocked
             }
+
+        lightweightChineseOverlayObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name(rawValue: Settings.lightweight_chinese_overlay),
+            object: nil, queue: .main) { [weak self] _ in
+                self?.lightweightChineseOverlayEnabled = Settings.lightweightChineseOverlay
+            }
+        priestAssistantEnabledObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name(rawValue: Settings.priest_assistant_enabled),
+            object: nil, queue: .main) { [weak self] _ in
+                self?.priestAssistantEnabled = Settings.priestAssistantEnabled
+            }
     }
 
     deinit {
         if let windowsLockedObserver {
             NotificationCenter.default.removeObserver(windowsLockedObserver)
+        }
+        if let lightweightChineseOverlayObserver {
+            NotificationCenter.default.removeObserver(lightweightChineseOverlayObserver)
+        }
+        if let priestAssistantEnabledObserver {
+            NotificationCenter.default.removeObserver(priestAssistantEnabledObserver)
         }
     }
 

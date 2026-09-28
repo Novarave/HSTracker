@@ -169,6 +169,7 @@ enum TrackerRowCardPreview {
         CardTooltipRequest(cardId: card.id,
                            showTriple: card.baconCard,
                            baconTriple: card.baconTriple,
+                           text: Settings.lightweightChineseOverlay ? card.simplifiedChineseName : nil,
                            placement: .right)
     }
 

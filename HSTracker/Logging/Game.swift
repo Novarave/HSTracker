@@ -241,6 +241,17 @@ class Game: NSObject, PowerEventHandler {
         self.updateMaxResourcesWidget()
         self.updateRootOverlay()
         self.updateCounters()
+
+        // The lightweight Chinese overlay consumes the same already-parsed
+        // Player/Entity state as the established tracker. Keep its assistant
+        // refresh on the main queue with the other SwiftUI view models.
+        DispatchQueue.main.async { [weak self] in
+            guard let self,
+                  let assistant = self.windowManager.rootOverlay?.viewModel.priestAssistant else {
+                return
+            }
+            assistant.refresh(game: self)
+        }
 	}
 	
     // MARK: - GUI calls

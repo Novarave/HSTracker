@@ -95,6 +95,7 @@ class Database {
     var mainLanguage = ""
     private var displayLanguage: Int?
     private var englishLanguage: Int?
+    private var simplifiedChineseLanguage: Int?
 
     func loadDatabase(splashscreen: Splashscreen?, withLanguages langs: [Language.Hearthstone]) {
         autoreleasepool {
@@ -110,6 +111,7 @@ class Database {
 
             mainLanguage = langs[0].rawValue
             englishLanguage = reader.languageIndex(of: Language.Hearthstone.enUS.rawValue)
+            simplifiedChineseLanguage = reader.languageIndex(of: Language.Hearthstone.zhCN.rawValue)
             displayLanguage = reader.languageIndex(of: mainLanguage)
             if displayLanguage == nil {
                 logger.error("\(mainLanguage) is missing from the card database, using enUS")
@@ -290,6 +292,9 @@ class Database {
             if let value = entity.localizedString(at: index, language: englishLanguage) {
                 currentCard?.enName = value
             }
+            if let value = entity.localizedString(at: index, language: simplifiedChineseLanguage) {
+                currentCard?.zhCNName = value
+            }
         case GameTag.cardtext.rawValue:
             if let value = entity.localizedString(at: index, language: displayLanguage) {
                 currentCard?.text = value
@@ -297,9 +302,15 @@ class Database {
             if let value = entity.localizedString(at: index, language: englishLanguage) {
                 currentCard?.enText = value
             }
+            if let value = entity.localizedString(at: index, language: simplifiedChineseLanguage) {
+                currentCard?.zhCNText = value
+            }
         case GameTag.flavortext.rawValue:
             if let value = entity.localizedString(at: index, language: displayLanguage) {
                 currentCard?.flavor = value
+            }
+            if let value = entity.localizedString(at: index, language: simplifiedChineseLanguage) {
+                currentCard?.zhCNFlavor = value
             }
         default:
             break

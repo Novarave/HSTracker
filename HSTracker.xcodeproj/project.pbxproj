@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D0C0DE000000000000000001 /* LogPathResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0DE100000000000000001 /* LogPathResolver.swift */; };
+		D0C0DE000000000000000002 /* PriestAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0DE100000000000000002 /* PriestAssistantViewModel.swift */; };
+		D0C0DE000000000000000003 /* ChineseLightweightOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0DE100000000000000003 /* ChineseLightweightOverlayView.swift */; };
+		D0C0DE000000000000000004 /* ChineseOverlayPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0DE100000000000000004 /* ChineseOverlayPreferences.swift */; };
+		D0C0DE000000000000000005 /* LogPathResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C0DE100000000000000005 /* LogPathResolverTests.swift */; };
 		007F08E45030E4217D8CFB9E /* RunesOfDarkness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D62B9589AFE2395A143FBDF /* RunesOfDarkness.swift */; };
 		00861C0F306D142858D6A60E /* SneedsNewShredderProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0EBDF8E209D5AF3AC8F4B5 /* SneedsNewShredderProxy.swift */; };
 		010B5360BE3F93FCA330D716 /* RewoundEntityCreationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CB37BE5C722DAC9773D151 /* RewoundEntityCreationFilter.swift */; };
@@ -1916,6 +1921,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D0C0DE100000000000000001 /* LogPathResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPathResolver.swift; sourceTree = "<group>"; };
+		D0C0DE100000000000000002 /* PriestAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriestAssistantViewModel.swift; sourceTree = "<group>"; };
+		D0C0DE100000000000000003 /* ChineseLightweightOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseLightweightOverlayView.swift; sourceTree = "<group>"; };
+		D0C0DE100000000000000004 /* ChineseOverlayPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseOverlayPreferences.swift; sourceTree = "<group>"; };
+		D0C0DE100000000000000005 /* LogPathResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogPathResolverTests.swift; sourceTree = "<group>"; };
 		0069AE75FCF9DD8FBFB3BB69 /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
 		00784AC5C0025D2E498265EE /* PlantedEvidence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantedEvidence.swift; sourceTree = "<group>"; };
 		0093278898A576BD6877B781 /* TheSunwell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheSunwell.swift; sourceTree = "<group>"; };
@@ -4033,6 +4043,7 @@
 		436032991C7B4C34005F1893 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				D0C0DE100000000000000004 /* ChineseOverlayPreferences.swift */,
 				7BA4A8152FF3EA91000B3784 /* PreferencePaneController.swift */,
 				7BA4A8192FF3EA91000B3784 /* PreferencesWindowController.swift */,
 				7BA4A8172FF3EA91000B3784 /* PreferencePane.swift */,
@@ -4209,6 +4220,7 @@
 		439C7E5F1C7772C100D29859 /* HSTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				D0C0DE100000000000000005 /* LogPathResolverTests.swift */,
 				1CF1B5891E81426D007DCBF2 /* AlgorithmTests.swift */,
 				B8A1F0002FCD0000000A0000 /* LocalizationFormatTests.swift */,
 				B8A1F0102FCD0010000A0010 /* CardTooltipTests.swift */,
@@ -4284,6 +4296,7 @@
 		439C7E931C777F8900D29859 /* Logging */ = {
 			isa = PBXGroup;
 			children = (
+				D0C0DE100000000000000001 /* LogPathResolver.swift */,
 				B864AE232597BB0500793F36 /* AdventureConfig.swift */,
 				1C132F811DBA24C1002B1BF2 /* AppHealth.swift */,
 				B898994C2CA450720011B184 /* BattlegroundsTrinketPickState.swift */,
@@ -4604,6 +4617,8 @@
 		9A2D20BAAAF228915120783F /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
+				D0C0DE100000000000000003 /* ChineseLightweightOverlayView.swift */,
+				D0C0DE100000000000000002 /* PriestAssistantViewModel.swift */,
 				AC96C3692BDC46AEE4F7540D /* Root */,
 				0078ED2E77630B6504F3FEFC /* Trackers */,
 				B8A1F9002FD90001000A0900 /* Hand */,
@@ -7032,6 +7047,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C0DE000000000000000001 /* LogPathResolver.swift in Sources */,
+				D0C0DE000000000000000002 /* PriestAssistantViewModel.swift in Sources */,
+				D0C0DE000000000000000003 /* ChineseLightweightOverlayView.swift in Sources */,
+				D0C0DE000000000000000004 /* ChineseOverlayPreferences.swift in Sources */,
 				B8956CFD25509B3F0073D70C /* BattlegroundsMinionView.swift in Sources */,
 				B86D89E62D95EC4D00AB65A5 /* FerociousFelbat.swift in Sources */,
 				B85462142CDEB9FF0083BB31 /* CrewmateGenerator.swift in Sources */,
@@ -8814,6 +8833,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0C0DE000000000000000005 /* LogPathResolverTests.swift in Sources */,
 				43C1C9F71E96CCE9008C20B1 /* AlgorithmTests.swift in Sources */,
 				43C1C9FD1E96CCE9008C20B1 /* DatabaseTests.swift in Sources */,
 				439BD8C91EBCD40200959F69 /* EnumTests.swift in Sources */,
