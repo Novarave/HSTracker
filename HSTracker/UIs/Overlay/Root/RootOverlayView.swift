@@ -596,7 +596,9 @@ struct RootOverlayView: View {
                                  canvasSize: geometry.size,
                                  isLocked: viewModel.windowsLocked)
             } else {
-                ChineseLightweightOverlayView(viewModel: viewModel, canvasSize: geometry.size)
+                ChineseLightweightOverlayView(viewModel: viewModel,
+                                              layout: viewModel.chineseOverlayLayout,
+                                              canvasSize: geometry.size)
             }
             // The two board grids. They draw nothing but the Mercenaries
             // ability strips - the hover ellipses behind them are measured

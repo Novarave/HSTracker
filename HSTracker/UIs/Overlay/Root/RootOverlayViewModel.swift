@@ -116,6 +116,7 @@ class RootOverlayViewModel: ObservableObject {
     let playerTracker = TrackerPanelViewModel(playerType: .player)
     let opponentTracker = TrackerPanelViewModel(playerType: .opponent)
     let priestAssistant = PriestAssistantViewModel()
+    let chineseOverlayLayout = ChineseOverlayLayoutViewModel()
 
     // What a hovered row in either tracker raises: the blown-up card render, the
     // related-cards grid and the player deck's synergy highlight. One per side,

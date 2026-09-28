@@ -836,6 +836,12 @@ final class Settings {
     static var lightweightChineseOverlay: Bool
     @UserDefault(key: Settings.priest_assistant_enabled, defaultValue: true)
     static var priestAssistantEnabled: Bool
+    @UserDefault(key: Settings.chinese_overlay_player_width, defaultValue: 300.0)
+    static var chineseOverlayPlayerWidth: Double
+    @UserDefault(key: Settings.chinese_overlay_opponent_width, defaultValue: 330.0)
+    static var chineseOverlayOpponentWidth: Double
+    @UserDefault(key: Settings.chinese_overlay_font_scale, defaultValue: 1.0)
+    static var chineseOverlayFontScale: Double
 
     // MARK: - Paths / utils
     static var isCyrillicLanguage: Bool {
@@ -886,6 +892,9 @@ extension Settings {
     static let theme_token = "theme"
     static let lightweight_chinese_overlay = "lightweight_chinese_overlay"
     static let priest_assistant_enabled = "priest_assistant_enabled"
+    static let chinese_overlay_player_width = "chinese_overlay_player_width"
+    static let chinese_overlay_opponent_width = "chinese_overlay_opponent_width"
+    static let chinese_overlay_font_scale = "chinese_overlay_font_scale"
 
     static let can_join_fullscreen = "can_join_fullscreen"
     static let quit_when_hs_closes = "quit_when_hs_closes"
