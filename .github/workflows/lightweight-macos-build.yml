@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Check out source
@@ -36,6 +36,7 @@ jobs:
         run: |
           set -o pipefail
           rm -rf build
+          mkdir -p build
           xcodebuild \
             -project HSTracker.xcodeproj \
             -scheme HSTracker \
